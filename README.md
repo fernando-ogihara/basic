@@ -243,4 +243,4 @@ Creating DB in the docker compose file is not working automatically, so I create
 `source /docker-entrypoint-initdb.d/02_country.sql;`
 `source /docker-entrypoint-initdb.d/03_pokemon.sql;` (eg /yoursqlfile)
 
-the next step is create via script
+the next step is create via script *not set
