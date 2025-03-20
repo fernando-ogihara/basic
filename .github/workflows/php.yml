@@ -31,11 +31,11 @@ jobs:
     - name: Copy .env.example to .env
       run: cp .env.example .env
 
-    - name: Grant execute permissions to yii
-      run: chmod +x yii
+    # - name: Grant execute permissions to yii
+    #   run: chmod +x yii
 
-    - name: Generate Application Key
-      run: ./yii key
+    # - name: Generate Application Key
+    #   run: ./yii key
 
     - name: Create Test Database (if needed)
       run: |
