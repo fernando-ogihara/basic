@@ -46,7 +46,7 @@ jobs:
       env:
         MYSQL_ROOT_PASSWORD: '' # Set your MySQL root password if needed
 
-    - name: Apply Migrations
+    - name: Apply Migrations if possible
       run: ./yii migrate --interactive=0 --env=test
 
     - name: Run Unit Tests
