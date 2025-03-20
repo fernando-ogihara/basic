@@ -1,24 +1,24 @@
-name: PHP Composer
+name: Yii2 Build and Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master", "develop" ] # Adjust branch names as needed
   pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+    branches: [ "master", "develop" ] # Adjust branch names as needed
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: install composer
-      run: composer install
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1' # Adjust to your required PHP version
+        extensions: pdo, mysql, mbstring, xml, ctype, tokenizer, intl, gd # Add needed extensions
+        coverage: xdebug # enable xdebug for code coverage
 
     - name: Cache Composer packages
       id: composer-cache
@@ -32,8 +32,29 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
+    - name: Copy .env.example to .env
+      run: cp .env.example .env
 
-    # - name: Run test suite
-    #   run: composer run-script test
+    - name: Generate Application Key
+      run: ./yii key
+
+    - name: Create Test Database (if needed)
+      run: |
+        mysql -e "CREATE DATABASE IF NOT EXISTS yii2basic_test;"
+        mysql -e "GRANT ALL PRIVILEGES ON yii2basic_test.* TO 'root'@'localhost';"
+        mysql -e "FLUSH PRIVILEGES;"
+      env:
+        MYSQL_ROOT_PASSWORD: '' # Set your MySQL root password if needed
+
+    - name: Apply Migrations
+      run: ./yii migrate --interactive=0 --env=test
+
+    - name: Run Unit Tests
+      run: vendor/bin/codecept run unit --coverage-html
+
+    - name: Upload Coverage Report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: coverage-report
+        path: tests/_output/coverage/
