@@ -235,6 +235,8 @@ You can see code coverage output under the `tests/_output` directory.
 ##################################################################################
 as I have the pretty URLs enabled, I have to use `localhost/folder/file.php` (eg /country/index) otherwise the url will be `/index.php?r=country/index`
 
+in config/db here 'dsn' => 'mysql:host=db;dbname=yii2basic', the host is set for docker if using Xaamp change `host=localhost`
+
 Creating DB in the docker compose file is not working automatically, so I created manually with 
 `docker exec -it yii_db bash`
 `USE yii2basic;`
