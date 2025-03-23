@@ -19,4 +19,9 @@ jobs:
           tools: composer:v2
 
       - name: Install Composer dependencies
-        run: composer update --no-interaction --no-dev
+        run: composer install --no-interaction --no-dev
+
+      - name: Run Codeception tests
+        run: |
+          ./vendor/bin/codecept build # Build Codeception environment
+          ./vendor/bin/codecept run # Run all tests
