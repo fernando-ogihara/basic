@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\Pokemon;
+use yii\web\Response;
+use yii\web\HttpException;
 
 /**
  * PokemonController handles the CRUD actions for Pokemon model.
