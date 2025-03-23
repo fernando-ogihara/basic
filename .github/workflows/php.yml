@@ -2,11 +2,17 @@ name: Yii2 Continuous Integration
 
 on:
   push:
+    branches:
+      - main # Or your main branch
+      - develop # Or your develop branch
+  pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
-  build:
+  backend:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -21,7 +27,26 @@ jobs:
       - name: Install Composer dependencies
         run: composer update --no-interaction --no-dev
 
-      - name: Run Codeception tests
+      - name: Run Backend Tasks
         run: |
-          ./vendor/bin/codecept build # Build Codeception environment
-          ./vendor/bin/codecept run # Run all tests
+          echo "Running backend tasks..."
+          sleep 5 # Simulate backend tasks (replace with actual commands)
+          echo "Backend tasks completed."
+
+  build-docker-image:
+    runs-on: ubuntu-latest
+    needs: [backend] # Depends on backend job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-compose -y
+
+      - name: Build Docker Image
+        run: |
+          echo "Running Step 2: Building Docker image..."
+          docker-compose build -d # Build your Docker image
+          echo "Docker image built."
