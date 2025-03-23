@@ -233,9 +233,15 @@ vendor/bin/codecept run functional,unit --coverage --coverage-html --coverage-xm
 You can see code coverage output under the `tests/_output` directory.
 
 ##################################################################################
-as I have the pretty URLs enabled, I have to use `localhost/folder/file.php` (eg /country/index) otherwise the url will be `/index.php?r=country/index`
+to run local:
+-php yii serve --port=2703   (any port)
 
-in config/db here 'dsn' => 'mysql:host=db;dbname=yii2basic', the host is set for docker if using Xaamp change `host=localhost`
+URL configs
+-as I have the pretty URLs enabled, I have to use `localhost/folder/file.php` (eg /country/index) otherwise the url will be `/index.php?r=country/index`
+
+DOCKER
+-in config/db here 'dsn' => 'mysql:host=db;dbname=yii2basic', the host is set for docker if using Xaamp change `host=localhost`
+*set env
 
 Creating DB in the docker compose file is not working automatically, so I created manually with 
 `docker exec -it yii_db bash`
@@ -243,4 +249,4 @@ Creating DB in the docker compose file is not working automatically, so I create
 `source /docker-entrypoint-initdb.d/02_country.sql;`
 `source /docker-entrypoint-initdb.d/03_pokemon.sql;` (eg /yoursqlfile)
 
-the next step is create via script *not set
+*the next step is create via script *not set
