@@ -30,7 +30,6 @@ jobs:
       - name: Run Backend Tasks
         run: |
           echo "Running backend tasks..."
-          sleep 5 # Simulate backend tasks (replace with actual commands)
           echo "Backend tasks completed."
 
   build-docker-image:
